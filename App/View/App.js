@@ -19,6 +19,8 @@ import url from 'url';
 
 var client;
 
+var Separator = () => <Text style={{ width: '8px' }}> </Text>;
+
 export class App extends Component {
   sendMessage() {
     // NB: This should work on react-native without props, but react-native-for-web appears to differ ... hence the fall-through
@@ -36,6 +38,36 @@ export class App extends Component {
   constructor() {
     super();
     this.onSendMessage = this.sendMessage.bind(this);
+    this.onRed = this.red.bind(this);
+    this.onGreen = this.green.bind(this);
+    this.onBlue = this.blue.bind(this);
+    this.onOff = this.off.bind(this);
+    this.onRGBCluster = this.rgbCluster.bind(this);
+    this.onRGBRepeat = this.rgbRepeat.bind(this);
+  }
+  red() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "red";
+    this.sendMessage();
+  }
+  green() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "green";
+    this.sendMessage();
+  }
+  blue() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "blue";
+    this.sendMessage();
+  }
+  off() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "off";
+    this.sendMessage();
+  }
+  rgbCluster() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "rgbcluster";
+    this.sendMessage();
+  }
+  rgbRepeat() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "rgbrepeat";
+    this.sendMessage();
   }
   componentDidMount() {
     console.log('App:componentDidMount()');
@@ -85,6 +117,22 @@ export class App extends Component {
             color="#841584" 
             accessibilityLabel="You're about to press the purple send button" />
           : <Text onPress={this.onSendMessage} style={styles.textButton}>Send Message</Text> }
+        </View>
+        <View>
+          <View style={styles.row}>
+            <Text onPress={this.onRed} style={{backgroundColor: 'red'}}>Red</Text>
+            <Separator />
+            <Text onPress={this.onGreen} style={{backgroundColor: 'green'}}>Green</Text>
+            <Separator />
+            <Text onPress={this.onBlue} style={{backgroundColor: 'blue'}}>Blue</Text>
+            <Separator />
+            <Text onPress={this.onOff} style={{backgroundColor: 'black', color: 'white'}}>Off</Text>
+          </View>
+          <View style={styles.row}>
+            <Text onPress={this.onRGBCluster} style={{backgroundColor: '#333'}}>RGB Cluster</Text>
+            <Separator />
+            <Text onPress={this.onRGBRepeat} style={{backgroundColor: '#666'}}>RGB Repeat</Text>
+          </View>
         </View>
         <Text style={styles.instructions}>
           Press Cmd+R to reload (Ctrl+r on Windows),{'\n'}
