@@ -8,6 +8,7 @@
     "web": "webpack-dev-server --port 3000 --config web/webpack.config.dev.js --inline --hot --colors"
   },
   "dependencies": {
+    "mqtt": "^2.2.1",
     "react": "^15.2.1",
     "react-native": "^0.30.0",
     "react-native-web": "^0.0.39",
