@@ -22,12 +22,12 @@ var client;
 var Separator = () => <Text style={{ width: '8px' }}> </Text>;
 
 export class App extends Component {
-  sendMessage() {
+  sendMessage(id,msg) {
     // NB: This should work on react-native without props, but react-native-for-web appears to differ ... hence the fall-through
     //var id = this.txtId.value;
     //var msg = this.txtMsg.value;
-    var id = this.txtId.refs.input ? this.txtId.refs.input.value : this.txtId.value;
-    var msg = this.txtMsg.refs.input ? this.txtMsg.refs.input.value : this.txtMsg.value;
+    id = id || this.txtId.refs.input ? this.txtId.refs.input.value : this.txtId.value;
+    msg = msg || this.txtMsg.refs.input ? this.txtMsg.refs.input.value : this.txtMsg.value;
     console.log("App.sendMessage: id=", id, ", msg=", msg, ", this.txtId=", this.txtId, ", this.txtMsg=", this.txtMsg);
     //////
     this.client.publish('/' + id, msg, function() {
@@ -44,6 +44,11 @@ export class App extends Component {
     this.onOff = this.off.bind(this);
     this.onRGBCluster = this.rgbCluster.bind(this);
     this.onRGBRepeat = this.rgbRepeat.bind(this);
+    this.onLoop = this.loop.bind(this);
+    this.onCylon = this.cylon.bind(this);
+    this.onCylonCluster = this.cylonCluster.bind(this);
+    this.onFaster = this.faster.bind(this);
+    this.onSlower = this.slower.bind(this);
   }
   red() {
     (this.txtMsg.refs.input || this.txtMsg).value = "red";
@@ -72,6 +77,26 @@ export class App extends Component {
   componentDidMount() {
     console.log('App:componentDidMount()');
     this.client = initMQTT();
+  }
+  cylon() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "cylon";
+    this.sendMessage();
+  }
+  cylonCluster() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "cyloncluster";
+    this.sendMessage();
+  }
+  loop() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "loop";
+    this.sendMessage();
+  }
+  faster() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "faster";
+    this.sendMessage();
+  }
+  slower() {
+    (this.txtMsg.refs.input || this.txtMsg).value = "slower";
+    this.sendMessage();
   }
   render() {
     /*
@@ -132,6 +157,18 @@ export class App extends Component {
             <Text onPress={this.onRGBCluster} style={{backgroundColor: '#333'}}>RGB Cluster</Text>
             <Separator />
             <Text onPress={this.onRGBRepeat} style={{backgroundColor: '#666'}}>RGB Repeat</Text>
+          </View>
+          <View style={styles.row}>
+            <Text onPress={this.onSlower} style={{backgroundColor: '#333'}}>Slower</Text>
+            <Separator />
+            <Text onPress={this.onFaster} style={{backgroundColor: '#666'}}>Faster</Text>
+          </View>
+          <View style={styles.row}>
+            <Text onPress={this.onCylonCluster} style={{backgroundColor: '#a33'}}>Cylon Cluster</Text>
+            <Separator />
+            <Text onPress={this.onCylon} style={{backgroundColor: '#a33'}}>Cylon</Text>
+            <Separator />
+            <Text onPress={this.onLoop} style={{backgroundColor: '#788'}}>Loop</Text>
           </View>
         </View>
         <Text style={styles.instructions}>
